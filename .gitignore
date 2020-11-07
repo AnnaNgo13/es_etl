@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+
+es_etl/
+.vscode/
+sensorData/
+.DS_Store
+TODO
