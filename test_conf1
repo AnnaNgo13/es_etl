@@ -1,0 +1,13 @@
+input {
+  tcp {
+    port => 5001
+    codec => json
+  }
+}
+output {
+  tcp {
+    mode => server
+    host => "0.0.0.0"
+    port => 5002
+    }
+}

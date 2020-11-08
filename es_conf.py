@@ -25,6 +25,7 @@ def create_index(es_object, index_name, mappings):
         return created
 
 def store_record(elastic_object, index_name, record):
+    print(record)
     try:
         outcome = elastic_object.index(index=index_name, body=record)
         print('Record stored in '+index_name)
