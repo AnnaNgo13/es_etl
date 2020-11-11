@@ -16,7 +16,7 @@ def streamToLogstash(index):
             # stream line to Logstash
             sock.send(line.encode())
             print("Record sent")
-            sleep(5)
+            sleep(3)
     sock.close()
 
 # main

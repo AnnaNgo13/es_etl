@@ -21,12 +21,16 @@ class ETL:
         self.output(self.transform())
 
     def start(self):
-        self.load()
+        try:
+            self.load()
+        except KeyboardInterrupt:
+            print("\nEtl process stopped")
+            quit()
 
 
 SOURCE="Logstash"
-DEST="stdout"
-# DEST="ES"
+#DEST="stdout"
+DEST="ES"
 
 
 if __name__ == "__main__": 

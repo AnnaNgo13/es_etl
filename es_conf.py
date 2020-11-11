@@ -25,11 +25,9 @@ def create_index(es_object, index_name, mappings):
         return created
 
 def store_record(elastic_object, index_name, record):
-    print(record)
+    print("Record is:", record)
     try:
         outcome = elastic_object.index(index=index_name, body=record)
         print('Record stored in '+index_name)
     except Exception as ex:
-        print('Error in indexing data to '+index_name)
-        print(str(ex))
-    
+        print('Error in indexing data to '+index_name+". "+str(ex))    
