@@ -1,9 +1,67 @@
 from datetime import datetime
+import json
+from utils import *
 
-test_record= {"applicationID": "5", "applicationName": "Auzon", "deviceName": "HE36228", "devEUI": "434e535302e36228", "rxInfo-gatewayID": "00800000a0003119", "rxInfo-name": "Multitech-Auzon", "rxInfo-rssi": -99, "rxInfo-loRaSNR": 8.8, "rxInfo-location-latitude": 0, "rxInfo-location-longitude": 0, "rxInfo-location-altitude": 0, "txInfo-frequency": 868300000, "txInfo-dr": 5, "adr": False, "fCnt": 0, "fPort": 2, "servertimestampUTC": "2020-10-14T10:21:42.366042", "data-DataChannel": 1, "data-node-timestampUTC": "2020-10-14T09:00:01", "data-node-batteryVoltage": 4.18, "data-node-batteryVoltage-unit": "V", "data-node-batteryVoltage-alarmIsLow": False, "data-CNSSRFConfigMM3Hash32": "2965B5D6", "data-node-geoPos-latitude": 45.3625, "data-node-geoPos-latitude-unit": "°", "data-node-geoPos-longitude": 3.36225, "data-node-geoPos-longitude-unit": "°", "data-CNSSRFSensorTypeMM3Hash32": "C9E815B9", "data-temperature": 13.39, "data-temperature-unit": "°C", "data-temperature-alarmH": False, "data-temperature-alarmL": False, "data-CNSSRFDataTypeId": 45, "data-CNSSRFDataTypeName": "TempHighResSmallRangeDegC"}
+
+def mapping(records, mapping_file):
+    mapping_conf=parseMapping(mapping_file)
+    for input_record in records:
+        print ("//////// Mapping "+input_record["applicationName"])
+        if input_record["applicationName"] in mapping_conf["mappings"].keys():
+            output_record={}
+            for field_mapping in mapping_conf["mappings"][input_record["applicationName"]]:
+                if field_mapping["type"]=="category":
+                    output_record[field_mapping["output"]]=map_category(input_record, field_mapping["input"])
+                elif field_mapping["type"]=="measurement":
+                    output_record[field_mapping["output"]]=map_measurement(input_record, field_mapping["input"])
+                elif field_mapping["type"]=="geo-point":
+                    output_record[field_mapping["output"]]=map_location(input_record, field_mapping["input"])
+                elif "datetime" in field_mapping["type"]:
+                    output_record[field_mapping["output"]]=map_datetime(input_record, field_mapping["input"], field_mapping["type"])
+
+            yield output_record
+
+def map_category(input_record, input_field):
+    try:
+        return input_record[input_field]
+    except Exception as ex:
+        print("Issue with:", ex)
+
+def map_measurement(input_record, input_field):
+    try:
+        return input_record[input_field]
+    except Exception as ex:
+        print("Issue with:", ex)
+
+def map_location(input_record, input_fields):
+    try:
+        return str(input_record[input_fields["lat"]])+","+str(input_record[input_fields["long"]])
+    except Exception as ex:
+        print("Issue with:", ex)
+
+def map_datetime(input_record, input, type ):
+    try:
+        dt=datetime.strptime(input_record[input["field"]], input["format"])
+        o= type.split("-")[1]
+        if o=="time":
+            return dt.strftime('%H:%M:%S')
+        elif o=="day":
+            return dt.day
+        elif o=="month":
+            return dt.month    
+        elif o=="year":
+            return dt.year
+    except Exception as ex:
+        print("Issue with:", ex)
+
+
+
+
+
+
+
 
 def auzon_mapping(input_record):
-    
 
     output_record={}
     #measurement data
@@ -71,20 +129,8 @@ def montoldre_mapping(input_record):
     except Exception as ex:
         print("Issue with:", ex)
         return None  
-
-
-def mapping(input_record):
-
-    if input_record["applicationName"]=="Auzon":
-        print ("//////// Mapping Auzon")
-        return auzon_mapping(input_record)
-    elif input_record["applicationName"]=="Montoldre":
-        print("///////// Mapping Montoldre")
-        return montoldre_mapping(input_record)
-
-
-
  
+TEST_RECORD= {"applicationID": "5", "applicationName": "Auzon", "deviceName": "HE36228", "devEUI": "434e535302e36228", "rxInfo-gatewayID": "00800000a0003119", "rxInfo-name": "Multitech-Auzon", "rxInfo-rssi": -99, "rxInfo-loRaSNR": 8.8, "rxInfo-location-latitude": 0, "rxInfo-location-longitude": 0, "rxInfo-location-altitude": 0, "txInfo-frequency": 868300000, "txInfo-dr": 5, "adr": False, "fCnt": 0, "fPort": 2, "servertimestampUTC": "2020-10-14T10:21:42.366042", "data-DataChannel": 1, "data-node-timestampUTC": "2020-10-14T09:00:01", "data-node-batteryVoltage": 4.18, "data-node-batteryVoltage-unit": "V", "data-node-batteryVoltage-alarmIsLow": False, "data-CNSSRFConfigMM3Hash32": "2965B5D6", "data-node-geoPos-latitude": 45.3625, "data-node-geoPos-latitude-unit": "°", "data-node-geoPos-longitude": 3.36225, "data-node-geoPos-longitude-unit": "°", "data-CNSSRFSensorTypeMM3Hash32": "C9E815B9", "data-temperature": 13.39, "data-temperature-unit": "°C", "data-temperature-alarmH": False, "data-temperature-alarmL": False, "data-CNSSRFDataTypeId": 45, "data-CNSSRFDataTypeName": "TempHighResSmallRangeDegC"}
 
 
 #main

@@ -28,6 +28,16 @@ def sendToIndex(records):
         store_record(es, "target_index", record)
     es.close()
 
+def parseMapping(mapping_json):
+    with open(mapping_json) as json_file:
+        data = json.load(json_file)
+    
+    return data
+
+
+
+
+
 
 SOURCE_FUNC={"Logstash":readFromLogstash}
 DEST_FUNC={"stdout":sendToStdout,"ES":sendToIndex}

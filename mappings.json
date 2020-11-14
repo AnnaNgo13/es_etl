@@ -1,0 +1,35 @@
+{
+    "mappings":
+    {
+        "Auzon":
+        [
+            {"output":"temperature", "input":"data-temperature", "type":"measurement"},
+            {"output":"waterLevel", "input":"data-level", "type":"measurement"},
+            {"output":"deviceID", "input":"devEUI", "type":"category"},
+            {"output":"deviceName", "input":"deviceName", "type":"category"},
+            {"output":"applicationID", "input":"applicationID", "type":"category"},
+            {"output":"applicationName", "input":"applicationName", "type":"category"},
+            {"output":"senLocation", "input":{"lat":"data-node-geoPos-latitude", "long":"data-node-geoPos-longitude"}, "type":"geo-point"},  
+            {"output":"time", "input":{"field":"servertimestampUTC","format":"%Y-%m-%dT%H:%M:%S.%f"}, "type":"datetime-time"},
+            {"output":"day", "input":{"field":"servertimestampUTC","format":"%Y-%m-%dT%H:%M:%S.%f"}, "type":"datetime-day"},
+            {"output":"month", "input":{"field":"servertimestampUTC","format":"%Y-%m-%dT%H:%M:%S.%f"}, "type":"datetime-month"},
+            {"output":"year", "input":{"field":"servertimestampUTC","format":"%Y-%m-%dT%H:%M:%S.%f"}, "type":"datetime-year"}
+        ],
+        "Montoldre":
+        [
+            {"output":"temperature", "input":"data-temperature", "type":"measurement"},
+            {"output":"rainAmount", "input":"data-rainAmount", "type":"measurement"},
+            {"output":"illuminance", "input":"data-illuminance", "type":"measurement"},
+            {"output":"airHumidity", "input":"data-airHumidity", "type":"measurement"},
+            {"output":"deviceID", "input":"devEUI", "type":"category"},
+            {"output":"deviceName", "input":"deviceName", "type":"category"},
+            {"output":"applicationID", "input":"applicationID", "type":"category"},
+            {"output":"applicationName", "input":"applicationName", "type":"category"},
+            {"output":"senLocation", "input":{"lat":"rxInfo-location-latitude", "long":"xInfo-location-longitude"}, "type":"geo-point"},  
+            {"output":"time", "input":{"field":"servertimestampUTC","format":"%Y-%m-%dT%H:%M:%S.%f"}, "type":"datetime-time"},
+            {"output":"day", "input":{"field":"servertimestampUTC","format":"%Y-%m-%dT%H:%M:%S.%f"}, "type":"datetime-day"},
+            {"output":"month", "input":{"field":"servertimestampUTC","format":"%Y-%m-%dT%H:%M:%S.%f"}, "type":"datetime-month"},
+            {"output":"year", "input":{"field":"servertimestampUTC","format":"%Y-%m-%dT%H:%M:%S.%f"}, "type":"datetime-year"}
+        ]
+    }
+}
