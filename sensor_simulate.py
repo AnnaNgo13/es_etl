@@ -1,7 +1,5 @@
 from time import sleep
-import logging
-from es_conf import *
-import json
+# import logging
 import socket   
 
 indices=["auzon", "montoldre"]

@@ -5,7 +5,7 @@ from es_conf import *
 def readFromLogstash():
     TCP_IP = '127.0.0.1'
     TCP_PORT = 5002
-    BUFFER_SIZE = 4096
+    BUFFER_SIZE = 6096 #4096
     sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:
         sock.connect((TCP_IP, TCP_PORT))
@@ -33,9 +33,6 @@ def parseMapping(mapping_json):
         data = json.load(json_file)
     
     return data
-
-
-
 
 
 

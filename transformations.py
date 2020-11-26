@@ -70,6 +70,7 @@ def auzon_mapping(input_record):
 
         # Measurements
         output_record["temperature"]=input_record["data-temperature"]
+        output_record["waterLevel"]=input_record["data-level"]
 
         #sensor info
         output_record["deviceID"]=input_record["devEUI"]
@@ -105,6 +106,9 @@ def montoldre_mapping(input_record):
 
         # Measurements
         output_record["temperature"]=input_record["data-temperature"]
+        output_record["rainAmount"]=input_record["data-rainAmount"]
+        output_record["illuminance"]=input_record["data-illuminance"]
+        output_record["airHumidity"]=input_record["data-airHumidity"]
 
         #sensor info
         output_record["deviceID"]=input_record["devEUI"]

@@ -28,7 +28,7 @@ class ETL:
 
 
 SOURCE="Logstash"
-#DEST="stdout"
+# DEST="stdout"
 DEST="ES"
 MAPPING="mappings.json"
 
