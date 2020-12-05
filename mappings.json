@@ -1,4 +1,6 @@
 {
+    "targetFields":["deviceID","deviceName","applicationID","applicationName","senLocation",
+    "time","day","month","year","temperature","waterLevel","rainAmount","illuminance","airHumidity"],
     "mappings":
     {
         "Auzon":
@@ -31,5 +33,14 @@
             {"output":"month", "input":{"field":"servertimestampUTC","format":"%Y-%m-%dT%H:%M:%S.%f"}, "type":"datetime-month"},
             {"output":"year", "input":{"field":"servertimestampUTC","format":"%Y-%m-%dT%H:%M:%S.%f"}, "type":"datetime-year"}
         ]
+    },
+    "aggregation":
+    {
+        "window":10,
+        "operations": {"temperature":"mean", "rainAmount":"mean", "illuminance":"mean", "airHumidity":"mean", "waterLevel":"mean"}
+    },
+    "extension":
+    {
+        "senLocation":"get_address"
     }
 }

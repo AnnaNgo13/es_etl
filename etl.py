@@ -1,5 +1,7 @@
-from utils import *
-from transformations import *
+from utils import SOURCE_FUNC, DEST_FUNC
+from transformations import mapping
+from aggregate import window
+from external import extend
 
 class ETL:
 
@@ -13,7 +15,7 @@ class ETL:
             yield record
 
     def transform(self):
-        for record in mapping(self.extract(), self.mapping_conf):
+        for record in extend(window(mapping(self.extract(), self.mapping_conf), self.mapping_conf)):
             yield record
 
     def load(self):
@@ -28,7 +30,7 @@ class ETL:
 
 
 SOURCE="Logstash"
-# DEST="stdout"
+#DEST="stdout"
 DEST="ES"
 MAPPING="mappings.json"
 

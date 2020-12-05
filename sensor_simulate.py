@@ -2,7 +2,7 @@ from time import sleep
 # import logging
 import socket   
 
-indices=["auzon", "montoldre"]
+
 
 def streamToLogstash(index):
     TCP_IP = '127.0.0.1'
@@ -20,9 +20,10 @@ def streamToLogstash(index):
 # main
 
 from concurrent import futures
-
-with futures.ProcessPoolExecutor() as executor:
-    executor.map(streamToLogstash, indices)
+if __name__ == "__main__": 
+    indices=["auzon", "montoldre"]
+    with futures.ProcessPoolExecutor() as executor:
+        executor.map(streamToLogstash, indices)
 
 
 

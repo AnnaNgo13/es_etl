@@ -14,7 +14,7 @@ Run elasticsearch and kibana
 
 1. run logstash with the configuration file
 ```
-bin/logstash -f path/to/test_conf1
+bin/logstash -f path/to/logstash_conf1
 ```
 
 2. Run sensor simulator

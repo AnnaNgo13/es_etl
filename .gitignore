@@ -134,3 +134,4 @@ es_etl/
 sensorData/
 .DS_Store
 TODO
+exAggregationQuery.json
