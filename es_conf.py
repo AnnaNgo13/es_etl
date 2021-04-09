@@ -1,4 +1,5 @@
 from elasticsearch import Elasticsearch
+import logging
 
 def connect_elasticsearch():
     _es = None
@@ -25,9 +26,9 @@ def create_index(es_object, index_name, mappings):
         return created
 
 def store_record(elastic_object, index_name, record):
-    print("Record is:", record)
+    logging.info("Record is: %s", record)
     try:
         outcome = elastic_object.index(index=index_name, body=record)
-        print('Record stored in '+index_name)
+        logging.info('Record stored in %s',index_name)
     except Exception as ex:
         print('Error in indexing data to '+index_name+". "+str(ex))    

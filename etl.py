@@ -2,6 +2,15 @@ from utils import SOURCE_FUNC, DEST_FUNC
 from transformations import mapping
 from aggregate import window
 from external import extend
+import logging 
+
+logging.basicConfig(
+    filename="logs/etl.log",
+    format="%(asctime)s.%(msecs)03d [%(levelname)s]: %(message)s",
+    datefmt="%Y-%m-%d %H:%M:%S",
+    level=logging.INFO,
+    filemode='w'
+)
 
 class ETL:
 
@@ -15,7 +24,8 @@ class ETL:
             yield record
 
     def transform(self):
-        for record in extend(window(mapping(self.extract(), self.mapping_conf), self.mapping_conf)):
+        for record in window(mapping(self.extract(), self.mapping_conf), self.mapping_conf):
+            #extend(window(mapping(self.extract(), self.mapping_conf), self.mapping_conf))
             yield record
 
     def load(self):
@@ -29,10 +39,10 @@ class ETL:
             quit()
 
 
-SOURCE="Logstash"
-DEST="stdout"
+SOURCE="file"
+DEST="ES"  # update "ES" means elasticsearch
 # DEST="ES"
-MAPPING="mappings.json"
+MAPPING="mappings_aydat.json"
 
 
 if __name__ == "__main__": 

@@ -1,24 +1,29 @@
 from datetime import datetime
 import json
 from utils import *
+import logging
 
 
 def mapping(records, mapping_file):
     mapping_conf=parseMapping(mapping_file)
+    print(mapping_conf)
     for input_record in records:
-        print ("//////// Mapping "+input_record["applicationName"])
+        # logging.info("*** Mapping "+input_record["applicationName"])
         if input_record["applicationName"] in mapping_conf["mappings"].keys():
-            output_record={}
+            output_record=dict()
             for field_mapping in mapping_conf["mappings"][input_record["applicationName"]]:
+                # logging.info("Handling %s", field_mapping["input"])
                 if field_mapping["type"]=="category":
                     output_record[field_mapping["output"]]=map_category(input_record, field_mapping["input"])
                 elif field_mapping["type"]=="measurement":
                     output_record[field_mapping["output"]]=map_measurement(input_record, field_mapping["input"])
                 elif field_mapping["type"]=="geo-point":
+                    # logging.info("Value in: %s", input_record[field_mapping["input"]])
                     output_record[field_mapping["output"]]=map_location(input_record, field_mapping["input"])
                 elif "datetime" in field_mapping["type"]:
+                    # logging.info("Value in: %s", input_record[field_mapping["input"]["field"]])
                     output_record[field_mapping["output"]]=map_datetime(input_record, field_mapping["input"], field_mapping["type"])
-
+                # logging.info("Value out: %s", output_record[field_mapping["output"]])
             yield output_record
 
 def map_category(input_record, input_field):
@@ -36,21 +41,38 @@ def map_measurement(input_record, input_field):
 def map_location(input_record, input_fields):
     try:
         return str(input_record[input_fields["lat"]])+","+str(input_record[input_fields["long"]])
+        #return str(input_record[input_fields])
     except Exception as ex:
         print("Issue with:", ex)
 
 def map_datetime(input_record, input, type ):
     try:
-        dt=datetime.strptime(input_record[input["field"]], input["format"])
-        o= type.split("-")[1]
-        if o=="time":
-            return dt.strftime('%H:%M:%S')
-        elif o=="day":
-            return dt.day
-        elif o=="month":
-            return dt.month    
-        elif o=="year":
-            return dt.year
+        if input["format"]!="epoch":
+            dt=datetime.strptime(input_record[input["field"]], input["format"])
+            o= type.split("-")[1]
+            if o=="time":
+                return dt.strftime('%H:%M:%S')
+            elif o=="hour":
+                return dt.hour
+            elif o=="day":
+                return dt.day
+            elif o=="month":
+                return dt.month    
+            elif o=="year":
+                return dt.year
+        else:
+            dt = datetime.fromtimestamp(input_record[input["field"]]//1000)
+            o= type.split("-")[1]
+            if o=="time":
+                return dt.strftime('%H:%M:%S')
+            elif o=="hour":
+                return dt.hour
+            elif o=="day":
+                return dt.day
+            elif o=="month":
+                return dt.month    
+            elif o=="year":
+                return dt.year
     except Exception as ex:
         print("Issue with:", ex)
 
