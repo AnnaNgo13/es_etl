@@ -1,0 +1,54 @@
+{
+    "targetFields":["deviceID","deviceName","applicationID","applicationName","senLocation",
+        "hour","day","month","year","temperature","waterLevel","nodeBatteryVoltage","conductivity","batteryVoltage"],
+    "mappings":
+    {
+        
+        "Montoldre":
+        [
+            {"output":"nodeBatteryVoltage", "input":"data-node-batteryVoltage", "type":"measurement"},
+            {"output":"depth1-depth", "input":"data-depth1-depth", "type":"measurement"},
+            {"output":"depth2-depth", "input":"data-depth2-depth", "type":"measurement"},
+            {"output":"depth3-depth", "input":"data-depth3-depth", "type":"measurement"},
+            {"output":"depth1-frequency", "input":"data-depth1-frequency", "type":"measurement"},
+            {"output":"depth2-frequency", "input":"data-depth2-frequency", "type":"measurement"},
+            {"output":"depth3-frequency", "input":"data-depth3-frequency", "type":"measurement"},
+            {"output":"depth1-soilTemperature", "input":"data-depth1-soilTemperature", "type":"measurement"},
+            {"output":"depth2-soilTemperature", "input":"data-depth2-soilTemperature", "type":"measurement"},
+            {"output":"depth3-soilTemperature", "input":"data-depth3-soilTemperature", "type":"measurement"},
+            {"output":"depth1-soilWaterTension", "input":"data-depth1-soilWaterTension", "type":"measurement"},
+            {"output":"depth2-soilWaterTension", "input":"data-depth2-soilWaterTension", "type":"measurement"},
+            {"output":"depth3-soilWaterTension", "input":"data-depth3-soilWaterTension", "type":"measurement"},
+            {"output":"rainAmount", "input":"data-rainAmount", "type":"measurement"},
+
+            {"output":"deviceID", "input":"devEUI", "type":"category"},
+            {"output":"deviceName", "input":"deviceName", "type":"category"},
+            {"output":"applicationID", "input":"applicationID", "type":"category"},
+            {"output":"applicationName", "input":"applicationName", "type":"category"},
+
+            {"output":"senLocation", "input":{"lat":"data-node-geoPos-latitude", "long":"data-node-geoPos-longitude"}, "type":"geo-point"},  
+            
+            {"output":"time", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-time"},
+            {"output":"hour", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-hour"},
+            {"output":"day", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-day"},
+            {"output":"month", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-month"},
+            {"output":"year", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-year"}
+        ]
+
+
+    },
+    "aggregation":
+    {
+        "window":10,
+        "operations": { "nodeBatteryVoltage":"mean",
+            "rainAmount":"mean",
+            "depth1-depth":"mean","depth2-depth":"mean","depth3-depth":"mean", "depth1-frequency":"mean",
+            "depth2-frequency":"mean","depth3-frequency":"mean","depth1-soilTemperature":"mean","depth2-soilTemperature":"mean",
+            "depth3-soilTemperature":"mean","depth1-soilWaterTension":"mean","depth2-soilWaterTension":"mean","depth3-soilWaterTension":"mean"
+        }
+    },
+    "extension":
+    {
+        "senLocation":"get_address"
+    }
+}
