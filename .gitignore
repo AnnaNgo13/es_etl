@@ -135,3 +135,5 @@ sensorData/
 .DS_Store
 TODO
 exAggregationQuery.json
+auzon_3m_output.json
+output.json

@@ -1,0 +1,16 @@
+{
+    "input":
+    {
+        "source_type":"file",
+        "file_path":"sensorData/data-auzon-2020-3month.json"
+    },
+    "mapping":
+    {
+        "mapping_file":"mappings_auzon.json"
+    },
+    "output":
+    {
+        "source_type":"file",
+        "file_path":"output.json"
+    }
+}

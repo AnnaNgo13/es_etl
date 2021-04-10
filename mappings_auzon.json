@@ -1,38 +1,30 @@
 {
-    "targetFields":["deviceID","deviceName","applicationID","applicationName","senLocation",
-        "hour","day","month","year","temperature","waterLevel","nodeBatteryVoltage","conductivity","batteryVoltage"],
     "mappings":
-    {
-        "Auzon":
-        [
-            {"output":"temperature", "input":"data-temperature", "type":"measurement"},
-            {"output":"waterLevel", "input":"data-level", "type":"measurement"},
-            {"output":"nodeBatteryVoltage", "input":"data-node-batteryVoltage", "type":"measurement"},
-            {"output":"conductivity", "input":"data-solutionSpecificConductivity", "type":"measurement"},
-            {"output":"batteryVoltage", "input":"data-batteryVoltage", "type":"measurement"},
+    [
+        {"output":"deviceID", "input":"devEUI", "type":"category"},
+        {"output":"deviceName", "input":"deviceName", "type":"category"},
+        {"output":"applicationID", "input":"applicationID", "type":"category"},
+        {"output":"applicationName", "input":"applicationName", "type":"category"},
+        
+        {"output":"time", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-time"},
+        {"output":"hour", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-hour"},
+        {"output":"day", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-day"},
+        {"output":"month", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-month"},
+        {"output":"year", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-year"},
 
+        {"output":"senLocation", "input":{"lat":"data-node-geoPos-latitude", "long":"data-node-geoPos-longitude"}, "type":"geo-point"},
 
-            {"output":"deviceID", "input":"devEUI", "type":"category"},
-            {"output":"deviceName", "input":"deviceName", "type":"category"},
-            {"output":"applicationID", "input":"applicationID", "type":"category"},
-            {"output":"applicationName", "input":"applicationName", "type":"category"},
-
-            {"output":"senLocation", "input":{"lat":"data-node-geoPos-latitude", "long":"data-node-geoPos-longitude"}, "type":"geo-point"},  
-            
-            {"output":"time", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-time"},
-            {"output":"hour", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-hour"},
-            {"output":"day", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-day"},
-            {"output":"month", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-month"},
-            {"output":"year", "input":{"field":"data-node-timestampUTC","format":"epoch"}, "type":"datetime-year"}
-        ]
-
-
-    },
+        {"output":"temperature", "input":"data-temperature", "type":"measurement"},
+        {"output":"waterLevel", "input":"data-level", "type":"measurement"},
+        {"output":"nodeBatteryVoltage", "input":"data-node-batteryVoltage", "type":"measurement"},
+        {"output":"conductivity", "input":"data-solutionSpecificConductivity", "type":"measurement"},
+        {"output":"batteryVoltage", "input":"data-batteryVoltage", "type":"measurement"}
+    ],
     "aggregation":
     {
-        "window":10,
-        "operations": {"temperature":"mean", "waterLevel":"mean", "batteryVoltage":"mean", "conductivity":"mean", "nodeBatteryVoltage":"mean"
-            
+        "window":60,
+        "operations": {"temperature":"mean", "waterLevel":"mean", "batteryVoltage":"mean", "conductivity":"mean", 
+            "nodeBatteryVoltage":"mean"         
         }
     },
     "extension":

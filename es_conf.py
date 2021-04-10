@@ -1,9 +1,9 @@
 from elasticsearch import Elasticsearch
 import logging
 
-def connect_elasticsearch():
+def connect_elasticsearch(host, port):
     _es = None
-    _es = Elasticsearch([{'host': 'localhost', 'port': 9200}])
+    _es = Elasticsearch([{'host': host, 'port': port}])
     if _es.ping():
         print('Connected')
     else:

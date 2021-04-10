@@ -9,22 +9,21 @@ def mapping(records, mapping_file):
     print(mapping_conf)
     for input_record in records:
         # logging.info("*** Mapping "+input_record["applicationName"])
-        if input_record["applicationName"] in mapping_conf["mappings"].keys():
-            output_record=dict()
-            for field_mapping in mapping_conf["mappings"][input_record["applicationName"]]:
-                # logging.info("Handling %s", field_mapping["input"])
-                if field_mapping["type"]=="category":
-                    output_record[field_mapping["output"]]=map_category(input_record, field_mapping["input"])
-                elif field_mapping["type"]=="measurement":
-                    output_record[field_mapping["output"]]=map_measurement(input_record, field_mapping["input"])
-                elif field_mapping["type"]=="geo-point":
-                    # logging.info("Value in: %s", input_record[field_mapping["input"]])
-                    output_record[field_mapping["output"]]=map_location(input_record, field_mapping["input"])
-                elif "datetime" in field_mapping["type"]:
-                    # logging.info("Value in: %s", input_record[field_mapping["input"]["field"]])
-                    output_record[field_mapping["output"]]=map_datetime(input_record, field_mapping["input"], field_mapping["type"])
-                # logging.info("Value out: %s", output_record[field_mapping["output"]])
-            yield output_record
+        output_record=dict()
+        for field_mapping in mapping_conf["mappings"]:
+            # logging.info("Handling %s", field_mapping["input"])
+            if field_mapping["type"]=="category":
+                output_record[field_mapping["output"]]=map_category(input_record, field_mapping["input"])
+            elif field_mapping["type"]=="measurement":
+                output_record[field_mapping["output"]]=map_measurement(input_record, field_mapping["input"])
+            elif field_mapping["type"]=="geo-point":
+                # logging.info("Value in: %s", input_record[field_mapping["input"]])
+                output_record[field_mapping["output"]]=map_location(input_record, field_mapping["input"])
+            elif "datetime" in field_mapping["type"]:
+                # logging.info("Value in: %s", input_record[field_mapping["input"]["field"]])
+                output_record[field_mapping["output"]]=map_datetime(input_record, field_mapping["input"], field_mapping["type"])
+            # logging.info("Value out: %s", output_record[field_mapping["output"]])
+        yield output_record
 
 def map_category(input_record, input_field):
     try:
