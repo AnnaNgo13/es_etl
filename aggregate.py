@@ -15,7 +15,7 @@ def window(records, mapping_file):
     for record in records: 
         if (record['deviceName'],record['year'],record['month'],record['day'],record['hour']) in groups.keys():
             groups[(record['deviceName'],record['year'],record['month'],record['day'],record['hour'])].append(record)
-            if len(groups[(record['deviceName'],record['year'],record['month'],record['day'],record['hour'])])==60:
+            if len(groups[(record['deviceName'],record['year'],record['month'],record['day'],record['hour'])])==window:
                 logging.info("completed %s",(record['deviceName'],record['year'],record['month'],record['day'],record['hour']))
                 yield aggregate(groups[(record['deviceName'],record['year'],record['month'],record['day'],record['hour'])],group_fields,op_fields)
         else:

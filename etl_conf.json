@@ -2,15 +2,17 @@
     "input":
     {
         "source_type":"file",
-        "file_path":"sensorData/data-auzon-2020-3month.json"
+        "file_path":"/home/ttngo/code/evaluationELK/dataset/data-zatu-2020-3month.json"
     },
     "mapping":
     {
-        "mapping_file":"mappings_auzon.json"
+        "mapping_file":"mappings_zatu.json"
     },
     "output":
     {
-        "source_type":"file",
-        "file_path":"output.json"
+        "source_type":"ES",
+        "host":"127.0.0.1",
+        "port":9200,
+        "target_index":"target_index_3month"
     }
 }

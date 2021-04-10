@@ -45,7 +45,7 @@ For ES
 ```
     {
         "source_type":"ES",
-        "host":127.0.0.1,
+        "host":"127.0.0.1",
         "port":9200,
         "target_index":"target_index_3month"
     }

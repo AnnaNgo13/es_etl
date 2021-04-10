@@ -49,8 +49,10 @@ def saveToFile(dfs, file_name):
 def sendToIndex(dfs, host, port, target_index):
     es = connect_elasticsearch(host,port)
     for df in dfs:
-        for record in json.loads(df.to_json(orient="records")):
-            store_record(es, target_index, record)  #update the target index
+        json_obj=json.loads(df.to_json(orient="records"))
+        store_record(es, target_index, json.dumps(json_obj[0]))
+        # for record in json.loads(df.to_json(orient="records")):
+        #     store_record(es, target_index, record)  #update the target index
     es.close()
 
 def sendToStdout(dfs):
