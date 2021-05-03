@@ -9,7 +9,7 @@ logging.basicConfig(
     filename="logs/etl.log",
     format="%(asctime)s.%(msecs)03d [%(levelname)s]: %(message)s",
     datefmt="%Y-%m-%d %H:%M:%S",
-    level=logging.INFO,
+    level=logging.WARN,
     filemode='w'
 )
 
@@ -42,13 +42,13 @@ class ETL:
             quit()
 
 
-SOURCE="file"
-DEST="ES"  # update "ES" means elasticsearch
-# DEST="ES"
-MAPPING="mappings_aydat.json"
-
 
 if __name__ == "__main__": 
 
-    etl = ETL("etl_conf.json")
+    # import sys
+    # args=sys.argv
+    # print("file processing: ", args[1])
+    # etl = ETL(args[1])
+
+    etl = ETL("etl_conf_zatu_3m.json")
     etl.start() 
